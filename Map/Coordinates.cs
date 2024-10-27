@@ -3,8 +3,8 @@ namespace Simulation.Map
 {
     internal record Coordinates
     {
-        public int Row { get; }
-        public int Col { get; }
+        public readonly int Row;
+        public readonly int Col;
 
         public Coordinates(int row, int col)
         {
