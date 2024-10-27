@@ -82,5 +82,16 @@ namespace Simulation.Model.Map
         {
             return EmptyCells.Count;
         }
+
+        public IEnumerable<Entity> GetEntriesByCondition(Predicate<KeyValuePair<Coordinates, Entity>> predicate)
+        {
+            List<Entity> result = new();
+
+            foreach (var entry in Cells) {
+                if (predicate(entry)) result.Add(entry.Value);
+            }
+
+            return result;
+        }
     }
 }
