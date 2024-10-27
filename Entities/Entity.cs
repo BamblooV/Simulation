@@ -1,11 +1,36 @@
-﻿using Simulation.Map;
-
+﻿
 namespace Simulation.Entities
 {
     internal abstract class Entity
     {
-        public Coordinates Coordinates { get; set; }
+        public readonly Guid Id;
+        public delegate void OnDestroy(Entity entity);
+        public event OnDestroy? DestroyHandler;
 
-        public Entity(Coordinates coordinates) => Coordinates = coordinates;
+        public Entity()
+        {
+            Id = Guid.NewGuid();
+        }
+
+        public override bool Equals(object? obj)
+        {
+            return obj is Entity entity &&
+                   Id == entity.Id;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Id);
+        }
+
+        public override string ToString()
+        {
+            return $"Simulation.Entities.Entity {{ Id: {Id} }}";
+        }
+
+        public void Destroy()
+        {
+            DestroyHandler?.Invoke(this);
+        }
     }
 }
