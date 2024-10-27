@@ -2,9 +2,12 @@
 
 namespace Simulation.Model.Map
 {
-    internal class WorldMap
+    internal sealed class WorldMap
     {
-        private Dictionary<Coordinates, Entity> Cells = new();
+        private readonly Dictionary<Coordinates, Entity> Cells = new();
+        private readonly List<Coordinates> EmptyCells = new();
+        private readonly Random Random = new Random();
+
         public readonly int RowsCount = 20; // 0 .. 20
         public readonly int ColsCount = 20; // 0 .. 20
 
@@ -14,7 +17,16 @@ namespace Simulation.Model.Map
             ColsCount = colsCount;
         }
 
-        public WorldMap() { }
+        public WorldMap()
+        {
+            for (int row = 0; row < RowsCount; row++)
+            {
+                for (int col = 0; col < ColsCount; col++)
+                {
+                    EmptyCells.Add(new Coordinates(row, col));
+                }
+            }
+        }
 
         private void CheckCoordinates(Coordinates coordinates)
         {
@@ -30,12 +42,14 @@ namespace Simulation.Model.Map
         {
             CheckCoordinates(coordinates);
             Cells.Add(coordinates, entity);
+            EmptyCells.Remove(coordinates);
         }
 
         public void RemoveEntity(Coordinates coordinates)
         {
             CheckCoordinates(coordinates);
             Cells.Remove(coordinates);
+            EmptyCells.Add(coordinates);
         }
 
         public void MoveEntity(Coordinates from, Coordinates to)
@@ -64,7 +78,22 @@ namespace Simulation.Model.Map
         {
             CheckCoordinates(coordinates);
 
-            return Cells.ContainsKey(coordinates);
+            return !Cells.ContainsKey(coordinates);
+        }
+
+        public Coordinates? GetRandomEmtyCell()
+        {
+            if (EmptyCells.Count == 0) return null;
+
+            var randomIndex = Random.Next(EmptyCells.Count);
+            var randomCell = EmptyCells[randomIndex];
+            EmptyCells.RemoveAt(randomIndex);
+            return randomCell;
+        }
+
+        public int GetCapacity()
+        {
+            return EmptyCells.Count;
         }
     }
 }

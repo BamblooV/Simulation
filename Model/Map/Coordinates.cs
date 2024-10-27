@@ -1,6 +1,6 @@
 ﻿namespace Simulation.Model.Map
 {
-    internal record Coordinates
+    internal sealed record Coordinates
     {
         public readonly int Row;
         public readonly int Col;
