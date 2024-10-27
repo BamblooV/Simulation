@@ -5,17 +5,17 @@ namespace Simulation.Model.Entities
     internal abstract class Entity
     {
         public Coordinates Coordinates{ get; protected set; }
-        protected WorldMap map;
+        protected WorldMap Map;
 
         public Entity(Coordinates coordinates, WorldMap map)
         {
             Coordinates = coordinates;
-            this.map = map;
+            Map = map;
         }
 
         public void Destroy()
         {
-            map.RemoveEntity(Coordinates);
+            Map.RemoveEntity(Coordinates);
         }
     }
 }
