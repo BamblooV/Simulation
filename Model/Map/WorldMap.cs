@@ -4,7 +4,7 @@ namespace Simulation.Model.Map
 {
     internal class WorldMap
     {
-        private Dictionary<Coordinates, Entity> cells = new();
+        private Dictionary<Coordinates, Entity> Cells = new();
         public readonly int RowsCount = 20; // 0 .. 20
         public readonly int ColsCount = 20; // 0 .. 20
 
@@ -29,13 +29,13 @@ namespace Simulation.Model.Map
         public void PlaceEntity(Entity entity, Coordinates coordinates)
         {
             CheckCoordinates(coordinates);
-            cells.Add(coordinates, entity);
+            Cells.Add(coordinates, entity);
         }
 
         public void RemoveEntity(Coordinates coordinates)
         {
             CheckCoordinates(coordinates);
-            cells.Remove(coordinates);
+            Cells.Remove(coordinates);
         }
 
         public void MoveEntity(Coordinates from, Coordinates to)
@@ -55,7 +55,7 @@ namespace Simulation.Model.Map
         {
             CheckCoordinates(coordinates);
 
-            if (cells.TryGetValue(coordinates, out var entity)) return entity;
+            if (Cells.TryGetValue(coordinates, out var entity)) return entity;
 
             return null;
         }
@@ -64,7 +64,7 @@ namespace Simulation.Model.Map
         {
             CheckCoordinates(coordinates);
 
-            return cells.ContainsKey(coordinates);
+            return Cells.ContainsKey(coordinates);
         }
     }
 }
