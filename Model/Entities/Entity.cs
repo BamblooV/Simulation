@@ -1,5 +1,4 @@
-﻿
-namespace Simulation.Entities
+﻿namespace Simulation.Model.Entities
 {
     internal abstract class Entity
     {

@@ -1,5 +1,4 @@
-﻿
-namespace Simulation.Map
+﻿namespace Simulation.Model.Map
 {
     internal record Coordinates
     {

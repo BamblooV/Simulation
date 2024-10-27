@@ -1,6 +1,6 @@
-﻿using Simulation.Entities;
+﻿using Simulation.Model.Entities;
 
-namespace Simulation.Map
+namespace Simulation.Model.Map
 {
     internal class WorldMap
     {
