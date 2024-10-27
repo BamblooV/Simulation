@@ -10,8 +10,6 @@
   <ItemGroup>
     <Folder Include="Model\Entities\Creatures\Herbivore\" />
     <Folder Include="Model\Entities\Creatures\Predator\" />
-    <Folder Include="Controller\" />
-    <Folder Include="View\" />
   </ItemGroup>
 
 </Project>
