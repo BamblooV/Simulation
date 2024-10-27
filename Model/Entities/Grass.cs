@@ -1,8 +1,11 @@
-﻿namespace Simulation.Model.Entities
+﻿using Simulation.Model.Map;
+
+namespace Simulation.Model.Entities
 {
     internal class Grass : Entity
     {
-        public Grass() : base()
-        { }
+        public Grass(Coordinates coordinates, WorldMap map) : base(coordinates, map)
+        {
+        }
     }
 }

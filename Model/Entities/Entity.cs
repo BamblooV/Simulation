@@ -1,35 +1,21 @@
-﻿namespace Simulation.Model.Entities
+﻿using Simulation.Model.Map;
+
+namespace Simulation.Model.Entities
 {
     internal abstract class Entity
     {
-        public readonly Guid Id;
-        public delegate void OnDestroy(Entity entity);
-        public event OnDestroy? DestroyHandler;
+        public Coordinates Coordinates{ get; protected set; }
+        protected WorldMap map;
 
-        public Entity()
+        public Entity(Coordinates coordinates, WorldMap map)
         {
-            Id = Guid.NewGuid();
-        }
-
-        public override bool Equals(object? obj)
-        {
-            return obj is Entity entity &&
-                   Id == entity.Id;
-        }
-
-        public override int GetHashCode()
-        {
-            return HashCode.Combine(Id);
-        }
-
-        public override string ToString()
-        {
-            return $"Simulation.Entities.Entity {{ Id: {Id} }}";
+            Coordinates = coordinates;
+            this.map = map;
         }
 
         public void Destroy()
         {
-            DestroyHandler?.Invoke(this);
+            map.RemoveEntity(Coordinates);
         }
     }
 }

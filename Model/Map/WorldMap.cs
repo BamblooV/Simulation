@@ -52,19 +52,6 @@ namespace Simulation.Model.Map
             EmptyCells.Add(coordinates);
         }
 
-        public void MoveEntity(Coordinates from, Coordinates to)
-        {
-            CheckCoordinates(from);
-            CheckCoordinates(to);
-
-            var entity = TryGetEntity(from);
-
-            if (entity is null) return;
-
-            RemoveEntity(from);
-            PlaceEntity(entity, to);
-        }
-
         public Entity? TryGetEntity(Coordinates coordinates)
         {
             CheckCoordinates(coordinates);

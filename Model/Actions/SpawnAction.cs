@@ -1,4 +1,5 @@
 ﻿using Simulation.Model.Entities;
+using Simulation.Model.Map;
 
 namespace Simulation.Model.Actions
 {
@@ -15,11 +16,15 @@ namespace Simulation.Model.Actions
         {
             for (int i = 0; i < Population; i++)
             {
-                var newEntity = CreateEntity();
-                context.AddEntity(newEntity);
+                Coordinates? emptyCoordinates = context.Map.GetRandomEmtyCell();
+
+                if (emptyCoordinates is null) return;
+
+                var newEntity = CreateEntity(context, emptyCoordinates);
+                context.Map.PlaceEntity(newEntity, emptyCoordinates);
             }
         }
 
-        protected abstract Entity CreateEntity();
+        protected abstract Entity CreateEntity(SimulationModel context, Coordinates coordinates);
     }
 }

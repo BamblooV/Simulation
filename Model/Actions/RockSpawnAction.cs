@@ -1,4 +1,5 @@
 ﻿using Simulation.Model.Entities;
+using Simulation.Model.Map;
 
 namespace Simulation.Model.Actions
 {
@@ -8,9 +9,9 @@ namespace Simulation.Model.Actions
         {
         }
 
-        protected override Entity CreateEntity()
+        protected override Rock CreateEntity(SimulationModel context, Coordinates coordinates)
         {
-            return new Rock();
+            return new Rock(coordinates, context.Map);
         }
     }
 }
