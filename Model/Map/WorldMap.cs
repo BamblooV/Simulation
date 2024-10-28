@@ -52,13 +52,11 @@ namespace Simulation.Model.Map
             EmptyCells.Add(coordinates);
         }
 
-        public Entity? TryGetEntity(Coordinates coordinates)
+        public bool TryGetEntity(Coordinates coordinates, out Entity entity)
         {
             CheckCoordinates(coordinates);
 
-            if (Cells.TryGetValue(coordinates, out var entity)) return entity;
-
-            return null;
+            return Cells.TryGetValue(coordinates, out entity);
         }
 
         public bool IsCellEmpty(Coordinates coordinates)
@@ -68,26 +66,29 @@ namespace Simulation.Model.Map
             return !Cells.ContainsKey(coordinates);
         }
 
-        public Coordinates? GetRandomEmtyCell()
+        public bool TryGetRandomEmtyCell(out Coordinates coordinates)
         {
-            if (EmptyCells.Count == 0) return null;
+            coordinates = null;
+
+            if (EmptyCells.Count == 0) return false;
 
             var randomIndex = Random.Next(EmptyCells.Count);
-            var randomCell = EmptyCells[randomIndex];
+            coordinates = EmptyCells[randomIndex];
             EmptyCells.RemoveAt(randomIndex);
-            return randomCell;
+            return true;
         }
 
         public int GetCapacity()
         {
-            return EmptyCells.Count;
+            return RowsCount * ColsCount;
         }
 
         public IEnumerable<Entity> GetEntriesByCondition(Predicate<KeyValuePair<Coordinates, Entity>> predicate)
         {
             List<Entity> result = new();
 
-            foreach (var entry in Cells) {
+            foreach (var entry in Cells)
+            {
                 if (predicate(entry)) result.Add(entry.Value);
             }
 

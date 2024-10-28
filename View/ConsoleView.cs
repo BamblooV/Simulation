@@ -19,7 +19,7 @@ namespace Simulation.View
                     if (col == 0) Console.Write("|");
 
                     Coordinates coordinates = new(row, col);
-                    var entity = map.TryGetEntity(coordinates);
+                    map.TryGetEntity(coordinates, out var entity);
                     Console.Write($" {GetEntitySymbol(entity)} |");
                 }
                 DrawRowSeparator(cols);

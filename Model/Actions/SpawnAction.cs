@@ -16,10 +16,8 @@ namespace Simulation.Model.Actions
         {
             for (int i = 0; i < Population; i++)
             {
-                Coordinates? emptyCoordinates = context.Map.GetRandomEmtyCell();
-
-                if (emptyCoordinates is null) return;
-
+                if (!context.Map.TryGetRandomEmtyCell(out var emptyCoordinates)) return;
+                
                 var newEntity = CreateEntity(context, emptyCoordinates);
                 context.Map.PlaceEntity(newEntity, emptyCoordinates);
             }
