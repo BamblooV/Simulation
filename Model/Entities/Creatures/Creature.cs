@@ -5,8 +5,7 @@ namespace Simulation.Model.Entities.Creatures
 {
     internal abstract class Creature : Entity
     {
-        private const int  MINIMAL_DISTANCE = 1;
-
+        protected const double MINIMAL_RANGE = 2;
         public readonly int Initiative;
         public readonly int Velocity;
         public bool IsDead { get; protected set; }
@@ -34,7 +33,7 @@ namespace Simulation.Model.Entities.Creatures
 
             var distance = GetDistanceToEntity(nearestPrey);
 
-            if (distance <= MINIMAL_DISTANCE)
+            if (distance <= MINIMAL_RANGE)
             {
                 if (TryEat(nearestPrey)) return;
             }
@@ -69,7 +68,7 @@ namespace Simulation.Model.Entities.Creatures
             }
         }
 
-        protected int GetDistanceToEntity(Entity entity)
+        protected double GetDistanceToEntity(Entity entity)
         {
             return Coordinates.GetDistance(entity.Coordinates);
         }
@@ -77,7 +76,7 @@ namespace Simulation.Model.Entities.Creatures
         protected bool TryGetNearestPrey(out Entity result)
         {
             result = null;
-            int resultDistance = 0;
+            double resultDistance = 0;
 
             var preys = Map.GetEntriesByCondition((entry) => CanEat(entry.Value));
 

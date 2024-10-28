@@ -21,15 +21,11 @@
             return HashCode.Combine(Row, Col);
         }
 
-        public int GetDistance(Coordinates coordinates)
+        public double GetDistance(Coordinates coordinates)
         {
-            return Convert.ToInt32(
-                Math.Round(
-                    Math.Sqrt(
+            return Math.Sqrt(
                         Math.Pow(coordinates.Row - Row, 2) + Math.Pow(coordinates.Col - Col, 2)
-                        )
-                    )
-                );
+                        );
         }
     }
 }

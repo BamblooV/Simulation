@@ -28,42 +28,47 @@ namespace Simulation.Model.Map
             }
         }
 
-        private void CheckCoordinates(Coordinates coordinates)
+        public bool InBoundaries(Coordinates coordinates)
         {
             var isRowOk = coordinates.Row >= 0 && coordinates.Row <= RowsCount;
             var isColOk = coordinates.Col >= 0 && coordinates.Col <= ColsCount;
 
-            if (isRowOk && isColOk) return;
+            return isRowOk && isColOk;
 
             throw new ArgumentOutOfRangeException($"Coordinates {coordinates} out of map boundary");
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <param name="coordinates"></param>
         public void PlaceEntity(Entity entity, Coordinates coordinates)
         {
-            CheckCoordinates(coordinates);
+            if (!InBoundaries(coordinates)) return;
             Cells.Add(coordinates, entity);
             EmptyCells.Remove(coordinates);
         }
 
         public void RemoveEntity(Coordinates coordinates)
         {
-            CheckCoordinates(coordinates);
+            if (!InBoundaries(coordinates)) return;
             Cells.Remove(coordinates);
             EmptyCells.Add(coordinates);
         }
 
         public bool TryGetEntity(Coordinates coordinates, out Entity entity)
         {
-            CheckCoordinates(coordinates);
+            entity = null;
+
+            if (!InBoundaries(coordinates)) return false;
 
             return Cells.TryGetValue(coordinates, out entity);
         }
 
         public bool IsCellEmpty(Coordinates coordinates)
         {
-            CheckCoordinates(coordinates);
-
-            return !Cells.ContainsKey(coordinates);
+            return InBoundaries(coordinates) && !Cells.ContainsKey(coordinates);
         }
 
         public bool TryGetRandomEmtyCell(out Coordinates coordinates)
